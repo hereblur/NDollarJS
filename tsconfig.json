@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+      "target": "es5",
+      "module": "commonjs",
+      "moduleResolution": "node",
+      "isolatedModules": false,
+      "removeComments": true,
+      "outDir": "dist",
+      "lib": ["es2015"]
+    },
+    "compileOnSave": true,
+    "buildOnSave": false,
+    "files": [
+      "src/$N.ts"
+    ],
+    "scripts": {
+
+    }
+}

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Stroke Example</title>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://cdn.rawgit.com/bgrins/TinyColor/master/tinycolor.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+    <script src="../$n-recognizer.js"></script>
+    <script src="_canvas.js"></script>
+    <script src="index.js"></script>
+    <link rel="stylesheet" href="index.css">
+  </head>
+  <body>
+    <div id="box">
+      <h1>$N Multistroke Recognizer</h1>
+      <h2>Typescript port of <a href="https://depts.washington.edu/aimgroup/proj/dollar/ndollar.html">$N Multistroke Recognizer</a>.</h2>
+      <br><br>
+      <input type="radio" name="alghorithm" value='golden' checked> Use Golden Section Search (original)
+      <input type="radio" name="alghorithm" value='protactor'> Use Protractor (faster)<br>
+      <input type="checkbox" name="boundRotation" value='boundRotation'> Use bounded rotation invariance (±45°)<br>
+      <input type="checkbox" name="sameStrokeCount" value='sameStrokeCount'> Require same no. of component strokes<br>
+      <button id="clear">Clear</button><br>
+      <pre id='output'></pre>
+      <canvas id="scene" width="500" height="500"></canvas>
+      <img src="https://depts.washington.edu/aimgroup/proj/dollar/multistrokes.gif">
+
+
+    </div>
+  </body>
+</html>
