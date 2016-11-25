@@ -1,13 +1,18 @@
 {
   "name": "ndollar-js",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A port of $NRecognizer.",
-  "main": "$N.js",
+  "main": "dist/nDollar.js",
   "scripts": {
     "test": "jest",
     "preinstall": "npm install autodts",
+    "build": "tsc -p ./src",
     "postinstall": "autodts link",
     "prepublish": "tsc && autodts generate"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:hereblur/NDollarJS.git"
   },
   "author": "Supasak Sutha",
   "license": "MIT",
@@ -18,6 +23,7 @@
     "autodts": "0.0.6"
   },
   "devDependencies": {
+    "@lib/autodts-generator": "0.0.2",
     "babel-preset-es2015": "^6.18.0",
     "babelify": "^7.3.0",
     "jest": "^17.0.2",
