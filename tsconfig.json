@@ -6,7 +6,7 @@
       "isolatedModules": false,
       "removeComments": true,
       "declaration": true,
-      "outDir": "dist",
+      "outDir": "dist/",
       "lib": ["es2015"]
     },
     "compileOnSave": true,
@@ -15,6 +15,6 @@
       "src/nDollar.ts"
     ],
     "scripts": {
-
+        "postbuild": "browserify dist/nDollar.js -s nDollar -t [ babelify --presets [ es2015 ] ] > dist/nDollar.js "
     }
 }

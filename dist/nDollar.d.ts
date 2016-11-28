@@ -1,35 +1,28 @@
-export declare class Point {
+declare class Point {
     X: number;
     Y: number;
     constructor(X: number, Y: number);
     static origin(): Point;
 }
-export declare class Rectangle {
-    X: number;
-    Y: number;
-    Width: number;
-    Height: number;
-    constructor(X: number, Y: number, Width: number, Height: number);
-}
-export declare class Result {
+declare class Result {
     Name: string;
     Score: number;
     constructor(Name: string, Score: number);
 }
-export declare class Unistroke {
+declare class Unistroke {
     Name: string;
     Points: Point[];
     StartUnitVector: Point;
     Vector: number[];
     constructor(Name: string, useBoundedRotationInvariance: boolean, points: Point[]);
 }
-export declare class Multistroke {
+declare class Multistroke {
     Name: string;
     NumStrokes: number;
     Unistrokes: Unistroke[];
     constructor(Name: string, useBoundedRotationInvariance: boolean, strokes: Point[][]);
 }
-export declare class Recognizer {
+declare class Recognizer {
     Multistrokes: Multistroke[];
     constructor();
     Recognize(strokes: Point[][], useBoundedRotationInvariance: boolean, requireSameNoOfStrokes: boolean, useProtractor: boolean): Result;
@@ -37,3 +30,4 @@ export declare class Recognizer {
     ClearGestures(): void;
     LoadDefaultGestures(useBoundedRotationInvariance: boolean): void;
 }
+export { Point, Result, Unistroke, Multistroke, Recognizer };

@@ -1,12 +1,12 @@
 {
   "name": "ndollar-js",
-  "version": "0.0.3",
+  "version": "0.5.0",
   "description": "A port of $NRecognizer.",
   "main": "dist/nDollar.js",
   "scripts": {
     "test": "jest",
     "preinstall": "npm install autodts",
-    "build": "tsc -p ./src",
+    "build": "tsc -p ./src; ",
     "postinstall": "autodts link",
     "prepublish": "tsc && autodts generate"
   },

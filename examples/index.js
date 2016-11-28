@@ -1,8 +1,7 @@
 $(document).ready(function(){
   window.Canvas.init()
 
-  var recognizer = new $NRecognizer.$NRecognizer();
-
+  var recognizer = new nDollar.Recognizer();
 
   var strokes = [];
   var stroking = []
@@ -19,7 +18,7 @@ $(document).ready(function(){
     if( !drawing && strokes.length){
       var _strokes = strokes.map(function(stroke){
                                       return stroke.map(function(p){
-                                        return new $NRecognizer.Point(p.x, p.y);
+                                        return new nDollar.Point(p.x, p.y);
                                       })
                                 });
 

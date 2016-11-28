@@ -1,36 +1,25 @@
-declare module 'ndollar-js' {
-	export class Point {
+declare module 'ndollar-js/dist/nDollar' {
+	 class Point {
 	    X: number;
 	    Y: number;
 	    constructor(X: number, Y: number);
 	    static origin(): Point;
-	}
-	export class Rectangle {
-	    X: number;
-	    Y: number;
-	    Width: number;
-	    Height: number;
-	    constructor(X: number, Y: number, Width: number, Height: number);
-	}
-	export class Result {
+	} class Result {
 	    Name: string;
 	    Score: number;
 	    constructor(Name: string, Score: number);
-	}
-	export class Unistroke {
+	} class Unistroke {
 	    Name: string;
 	    Points: Point[];
 	    StartUnitVector: Point;
 	    Vector: number[];
 	    constructor(Name: string, useBoundedRotationInvariance: boolean, points: Point[]);
-	}
-	export class Multistroke {
+	} class Multistroke {
 	    Name: string;
 	    NumStrokes: number;
 	    Unistrokes: Unistroke[];
 	    constructor(Name: string, useBoundedRotationInvariance: boolean, strokes: Point[][]);
-	}
-	export class Recognizer {
+	} class Recognizer {
 	    Multistrokes: Multistroke[];
 	    constructor();
 	    Recognize(strokes: Point[][], useBoundedRotationInvariance: boolean, requireSameNoOfStrokes: boolean, useProtractor: boolean): Result;
@@ -38,5 +27,10 @@ declare module 'ndollar-js' {
 	    ClearGestures(): void;
 	    LoadDefaultGestures(useBoundedRotationInvariance: boolean): void;
 	}
+	export { Point, Result, Unistroke, Multistroke, Recognizer };
 
+}
+declare module 'ndollar-js' {
+	import main = require('ndollar-js/dist/nDollar');
+	export = main;
 }

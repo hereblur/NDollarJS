@@ -250,7 +250,6 @@ var Rectangle = (function () {
     }
     return Rectangle;
 }());
-exports.Rectangle = Rectangle;
 var Result = (function () {
     function Result(Name, Score) {
         this.Name = Name;

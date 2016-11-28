@@ -255,7 +255,7 @@ const StartAngleIndex = (NumPoints / 8); // eighth of gesture length
 const AngleSimilarityThreshold = Deg2Rad(30.0);
 
 
-export class Point {
+class Point {
   constructor(public X: number, public Y: number) {}
 
   static origin() {
@@ -263,15 +263,15 @@ export class Point {
   }
 }
 
-export class Rectangle {
+class Rectangle {
   constructor(public X: number, public Y: number, public Width: number, public Height: number) {}
 }
 
-export class Result {
+class Result {
   constructor(public Name: string, public Score: number) {}
 }
 
-export class Unistroke {
+class Unistroke {
   Points: Point[];
   StartUnitVector: Point;
   Vector: number[];
@@ -293,7 +293,7 @@ export class Unistroke {
 //
 // Multistroke class: a container for unistrokes
 //
-export class Multistroke {
+class Multistroke {
   NumStrokes: number;
   Unistrokes: Unistroke[];
 
@@ -321,7 +321,7 @@ export class Multistroke {
 //
 // NDollarRecognizer class
 //
-export class Recognizer {
+class Recognizer {
   Multistrokes: Multistroke[];
   constructor() {// constructor
     this.Multistrokes = [];
@@ -448,6 +448,11 @@ export class Recognizer {
   }
 
 }
-//
-// Private helper functions from this point down
-//
+
+export{
+  Point,
+  Result,
+  Unistroke,
+  Multistroke,
+  Recognizer,
+};
