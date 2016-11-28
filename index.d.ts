@@ -1,4 +1,4 @@
-declare module 'ndollar-js/dist/nDollar' {
+declare module 'ndollar-js' {
 	 class Point {
 	    X: number;
 	    Y: number;
@@ -29,8 +29,4 @@ declare module 'ndollar-js/dist/nDollar' {
 	}
 	export { Point, Result, Unistroke, Multistroke, Recognizer };
 
-}
-declare module 'ndollar-js' {
-	import main = require('ndollar-js/dist/nDollar');
-	export = main;
 }

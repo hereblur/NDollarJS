@@ -11,7 +11,6 @@ simply: `npm install ndollar-js`
 
 
 ### Example, Using as a node module
-
 ```js
     var nDollar = require("ndollar-js");
     var recognizer = new nDollar.Recognizer();
@@ -32,6 +31,41 @@ simply: `npm install ndollar-js`
                                    ];
 
     result = recognizer.recognize( myHandDrawingOfTriangle, useBoundedRotationInvariance, requireSameNoOfStrokes, useProtractor);
+    /*
+      result = { Name: "triangle", Score: 8.076 }
+    */
+
+```
+
+### Example, Using in the web browsers
+
+Attach script to the page.
+```html
+  <script src="../dist/nDollar.js"></script>
+```
+
+```js
+  var recognizer = new nDollar.Recognizer();
+  var strokes = [];
+  var stroking = []
+
+  var useBoundedRotationInvariance = true;
+
+  recognizer.LoadDefaultGestures( useBoundedRotationInvariance );
+
+  var triangle = [[new nDollar.Point(30, 7),  new nDollar.Point(103, 7)],
+                  [new nDollar.Point(103, 7), new nDollar.Point(66, 87)],
+                  [new nDollar.Point(66, 87), new nDollar.Point(30, 7)]
+                 ];
+
+  recognizer.AddGesture( "triangle", useBoundedRotationInvariance, triangle);
+
+  var myHandDrawingOfTriangle = [ [new nDollar.Point(20, 7),   new nDollar.Point(54, 8),  new nDollar.Point(100, 10)],
+                                  [new nDollar.Point(103, 7),  new nDollar.Point(82, 47), new nDollar.Point(66, 87)],
+                                  [new nDollar.Point(66, 87),  new nDollar.Point(45, 45), new nDollar.Point(30, 7)]
+                                 ];
+
+  result = recognizer.recognize( myHandDrawingOfTriangle, useBoundedRotationInvariance, requireSameNoOfStrokes, useProtractor);
     /*
       result = { Name: "triangle", Score: 8.076 }
     */
