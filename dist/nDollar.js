@@ -25,8 +25,9 @@ var BoundingBox = function (points) {
 };
 var PathDistance = function (pts1, pts2) {
     var d = 0.0;
-    for (var i = 0; i < pts1.length; i++)
+    for (var i = 0; i < pts1.length; i++) {
         d += Distance(pts1[i], pts2[i]);
+    }
     return d / pts1.length;
 };
 var PathLength = function (points) {
@@ -294,20 +295,22 @@ var Multistroke = (function () {
 }());
 exports.Multistroke = Multistroke;
 var Recognizer = (function () {
-    function Recognizer() {
+    function Recognizer(useBoundedRotationInvariance) {
+        this.useBoundedRotationInvariance = useBoundedRotationInvariance;
         this.Multistrokes = [];
     }
-    Recognizer.prototype.Recognize = function (strokes, useBoundedRotationInvariance, requireSameNoOfStrokes, useProtractor) {
+    Recognizer.prototype.Recognize = function (strokes, requireSameNoOfStrokes, useProtractor) {
         var points = CombineStrokes(strokes);
         points = Resample(points, NumPoints);
         var radians = IndicativeAngle(points);
         points = RotateBy(points, -radians);
         points = ScaleDimTo(points, SquareSize, OneDThreshold);
-        if (useBoundedRotationInvariance)
+        if (this.useBoundedRotationInvariance) {
             points = RotateBy(points, +radians);
+        }
         points = TranslateTo(points, Point.origin());
         var startv = CalcStartUnitVector(points, StartAngleIndex);
-        var vector = Vectorize(points, useBoundedRotationInvariance);
+        var vector = Vectorize(points, this.useBoundedRotationInvariance);
         var b = +Infinity;
         var u = -1;
         for (var i = 0; i < this.Multistrokes.length; i++) {
@@ -329,8 +332,8 @@ var Recognizer = (function () {
         }
         return (u === -1) ? new Result("No match.", 0.0) : new Result(this.Multistrokes[u].Name, useProtractor ? 1.0 / b : 1.0 - b / HalfDiagonal);
     };
-    Recognizer.prototype.AddGesture = function (name, useBoundedRotationInvariance, strokes) {
-        this.Multistrokes.push(new Multistroke(name, useBoundedRotationInvariance, strokes));
+    Recognizer.prototype.AddGesture = function (name, strokes) {
+        this.Multistrokes.push(new Multistroke(name, this.useBoundedRotationInvariance, strokes));
         var num = 0;
         for (var i = 0; i < this.Multistrokes.length; i++) {
             if (this.Multistrokes[i].Name === name)
@@ -341,70 +344,70 @@ var Recognizer = (function () {
     Recognizer.prototype.ClearGestures = function () {
         this.Multistrokes = [];
     };
-    Recognizer.prototype.LoadDefaultGestures = function (useBoundedRotationInvariance) {
-        this.Multistrokes.push(new Multistroke("T", useBoundedRotationInvariance, [
+    Recognizer.prototype.LoadDefaultGestures = function () {
+        this.Multistrokes.push(new Multistroke("T", this.useBoundedRotationInvariance, [
             [new Point(30, 7), new Point(103, 7)],
             [new Point(66, 7), new Point(66, 87)]
         ]));
-        this.Multistrokes.push(new Multistroke("N", useBoundedRotationInvariance, [
+        this.Multistrokes.push(new Multistroke("N", this.useBoundedRotationInvariance, [
             [new Point(177, 92), new Point(177, 2)],
             [new Point(182, 1), new Point(246, 95)],
             [new Point(247, 87), new Point(247, 1)]
         ]));
-        this.Multistrokes.push(new Multistroke("D", useBoundedRotationInvariance, [
+        this.Multistrokes.push(new Multistroke("D", this.useBoundedRotationInvariance, [
             [new Point(345, 9), new Point(345, 87)],
             [new Point(351, 8), new Point(363, 8), new Point(372, 9), new Point(380, 11), new Point(386, 14), new Point(391, 17), new Point(394, 22), new Point(397, 28), new Point(399, 34), new Point(400, 42), new Point(400, 50), new Point(400, 56), new Point(399, 61), new Point(397, 66), new Point(394, 70), new Point(391, 74), new Point(386, 78), new Point(382, 81), new Point(377, 83), new Point(372, 85), new Point(367, 87), new Point(360, 87), new Point(355, 88), new Point(349, 87)]
         ]));
-        this.Multistrokes.push(new Multistroke("P", useBoundedRotationInvariance, [
+        this.Multistrokes.push(new Multistroke("P", this.useBoundedRotationInvariance, [
             [new Point(507, 8), new Point(507, 87)],
             [new Point(513, 7), new Point(528, 7), new Point(537, 8), new Point(544, 10), new Point(550, 12), new Point(555, 15), new Point(558, 18), new Point(560, 22), new Point(561, 27), new Point(562, 33), new Point(561, 37), new Point(559, 42), new Point(556, 45), new Point(550, 48), new Point(544, 51), new Point(538, 53), new Point(532, 54), new Point(525, 55), new Point(519, 55), new Point(513, 55), new Point(510, 55)]
         ]));
-        this.Multistrokes.push(new Multistroke("X", useBoundedRotationInvariance, [
+        this.Multistrokes.push(new Multistroke("X", this.useBoundedRotationInvariance, [
             [new Point(30, 146), new Point(106, 222)],
             [new Point(30, 225), new Point(106, 146)]
         ]));
-        this.Multistrokes.push(new Multistroke("H", useBoundedRotationInvariance, [
+        this.Multistrokes.push(new Multistroke("H", this.useBoundedRotationInvariance, [
             [new Point(188, 137), new Point(188, 225)],
             [new Point(188, 180), new Point(241, 180)],
             [new Point(241, 137), new Point(241, 225)]
         ]));
-        this.Multistrokes.push(new Multistroke("I", useBoundedRotationInvariance, [
+        this.Multistrokes.push(new Multistroke("I", this.useBoundedRotationInvariance, [
             [new Point(371, 149), new Point(371, 221)],
             [new Point(341, 149), new Point(401, 149)],
             [new Point(341, 221), new Point(401, 221)]
         ]));
-        this.Multistrokes.push(new Multistroke("exclamation", useBoundedRotationInvariance, [
+        this.Multistrokes.push(new Multistroke("exclamation", this.useBoundedRotationInvariance, [
             [new Point(526, 142), new Point(526, 204)],
             [new Point(526, 221)]
         ]));
-        this.Multistrokes.push(new Multistroke("line", useBoundedRotationInvariance, [
+        this.Multistrokes.push(new Multistroke("line", this.useBoundedRotationInvariance, [
             [new Point(12, 347), new Point(119, 347)]
         ]));
-        this.Multistrokes.push(new Multistroke("five-point star", useBoundedRotationInvariance, [
+        this.Multistrokes.push(new Multistroke("five-point star", this.useBoundedRotationInvariance, [
             [new Point(177, 396), new Point(223, 299), new Point(262, 396), new Point(168, 332), new Point(278, 332), new Point(184, 397)]
         ]));
-        this.Multistrokes.push(new Multistroke("null", useBoundedRotationInvariance, [
+        this.Multistrokes.push(new Multistroke("null", this.useBoundedRotationInvariance, [
             [new Point(382, 310), new Point(377, 308), new Point(373, 307), new Point(366, 307), new Point(360, 310), new Point(356, 313), new Point(353, 316), new Point(349, 321), new Point(347, 326), new Point(344, 331), new Point(342, 337), new Point(341, 343), new Point(341, 350), new Point(341, 358), new Point(342, 362), new Point(344, 366), new Point(347, 370), new Point(351, 374), new Point(356, 379), new Point(361, 382), new Point(368, 385), new Point(374, 387), new Point(381, 387), new Point(390, 387), new Point(397, 385), new Point(404, 382), new Point(408, 378), new Point(412, 373), new Point(416, 367), new Point(418, 361), new Point(419, 353), new Point(418, 346), new Point(417, 341), new Point(416, 336), new Point(413, 331), new Point(410, 326), new Point(404, 320), new Point(400, 317), new Point(393, 313), new Point(392, 312)],
             [new Point(418, 309), new Point(337, 390)]
         ]));
-        this.Multistrokes.push(new Multistroke("arrowhead", useBoundedRotationInvariance, [
+        this.Multistrokes.push(new Multistroke("arrowhead", this.useBoundedRotationInvariance, [
             [new Point(506, 349), new Point(574, 349)],
             [new Point(525, 306), new Point(584, 349), new Point(525, 388)]
         ]));
-        this.Multistrokes.push(new Multistroke("pitchfork", useBoundedRotationInvariance, [
+        this.Multistrokes.push(new Multistroke("pitchfork", this.useBoundedRotationInvariance, [
             [new Point(38, 470), new Point(36, 476), new Point(36, 482), new Point(37, 489), new Point(39, 496), new Point(42, 500), new Point(46, 503), new Point(50, 507), new Point(56, 509), new Point(63, 509), new Point(70, 508), new Point(75, 506), new Point(79, 503), new Point(82, 499), new Point(85, 493), new Point(87, 487), new Point(88, 480), new Point(88, 474), new Point(87, 468)],
             [new Point(62, 464), new Point(62, 571)]
         ]));
-        this.Multistrokes.push(new Multistroke("six-point star", useBoundedRotationInvariance, [
+        this.Multistrokes.push(new Multistroke("six-point star", this.useBoundedRotationInvariance, [
             [new Point(177, 554), new Point(223, 476), new Point(268, 554), new Point(183, 554)],
             [new Point(177, 490), new Point(223, 568), new Point(268, 490), new Point(183, 490)]
         ]));
-        this.Multistrokes.push(new Multistroke("asterisk", useBoundedRotationInvariance, [
+        this.Multistrokes.push(new Multistroke("asterisk", this.useBoundedRotationInvariance, [
             [new Point(325, 499), new Point(417, 557)],
             [new Point(417, 499), new Point(325, 557)],
             [new Point(371, 486), new Point(371, 571)]
         ]));
-        this.Multistrokes.push(new Multistroke("half-note", useBoundedRotationInvariance, [
+        this.Multistrokes.push(new Multistroke("half-note", this.useBoundedRotationInvariance, [
             [new Point(546, 465), new Point(546, 531)],
             [new Point(540, 530), new Point(536, 529), new Point(533, 528), new Point(529, 529), new Point(524, 530), new Point(520, 532), new Point(515, 535), new Point(511, 539), new Point(508, 545), new Point(506, 548), new Point(506, 554), new Point(509, 558), new Point(512, 561), new Point(517, 564), new Point(521, 564), new Point(527, 563), new Point(531, 560), new Point(535, 557), new Point(538, 553), new Point(542, 548), new Point(544, 544), new Point(546, 540), new Point(546, 536)]
         ]));

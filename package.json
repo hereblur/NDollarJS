@@ -1,8 +1,9 @@
 {
   "name": "ndollar-js",
-  "version": "0.5.0",
+  "version": "0.6.1",
   "description": "A port of $NRecognizer.",
   "main": "dist/nDollar.js",
+  "types": "dist/nDollar.d.ts",
   "scripts": {
     "test": "jest",
     "preinstall": "npm install autodts",

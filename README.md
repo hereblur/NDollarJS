@@ -5,7 +5,15 @@ Implementation of the [$N Multistroke Recognizer](https://depts.washington.edu/a
 
 ### Installation
 
-simply: `npm install ndollar-js`
+simply:
+```
+  npm install ndollar-js
+```
+
+or for web browsers,
+```html
+  <script src="../dist/nDollar.js"></script>
+```
 
 ---
 
@@ -13,24 +21,24 @@ simply: `npm install ndollar-js`
 ### Example, Using as a node module
 ```js
     var nDollar = require("ndollar-js");
-    var recognizer = new nDollar.Recognizer();
     var useBoundedRotationInvariance = true;
+    var recognizer = new nDollar.Recognizer( useBoundedRotationInvariance );
 
-    recognizer.LoadDefaultGestures( useBoundedRotationInvariance );
+    recognizer.LoadDefaultGestures( );
 
     var triangle = [[new nDollar.Point(30, 7),  new nDollar.Point(103, 7)],
                     [new nDollar.Point(103, 7), new nDollar.Point(66, 87)],
                     [new nDollar.Point(66, 87), new nDollar.Point(30, 7)]
                    ];
 
-    recognizer.AddGesture( "triangle", useBoundedRotationInvariance, triangle);
+    recognizer.AddGesture( "triangle", triangle);
 
     var myHandDrawingOfTriangle = [ [new nDollar.Point(20, 7),   new nDollar.Point(54, 8),  new nDollar.Point(100, 10)],
                                     [new nDollar.Point(103, 7),  new nDollar.Point(82, 47), new nDollar.Point(66, 87)],
                                     [new nDollar.Point(66, 87),  new nDollar.Point(45, 45), new nDollar.Point(30, 7)]
                                    ];
 
-    result = recognizer.recognize( myHandDrawingOfTriangle, useBoundedRotationInvariance, requireSameNoOfStrokes, useProtractor);
+    result = recognizer.recognize( myHandDrawingOfTriangle, requireSameNoOfStrokes, useProtractor);
     /*
       result = { Name: "triangle", Score: 8.076 }
     */
@@ -39,33 +47,27 @@ simply: `npm install ndollar-js`
 
 ### Example, Using in the web browsers
 
-Attach script to the page.
-```html
-  <script src="../dist/nDollar.js"></script>
-```
-
 ```js
-  var recognizer = new nDollar.Recognizer();
+  var useBoundedRotationInvariance = true;
+  var recognizer = new nDollar.Recognizer(useBoundedRotationInvariance);
   var strokes = [];
   var stroking = []
 
-  var useBoundedRotationInvariance = true;
-
-  recognizer.LoadDefaultGestures( useBoundedRotationInvariance );
+  recognizer.LoadDefaultGestures(  );
 
   var triangle = [[new nDollar.Point(30, 7),  new nDollar.Point(103, 7)],
                   [new nDollar.Point(103, 7), new nDollar.Point(66, 87)],
                   [new nDollar.Point(66, 87), new nDollar.Point(30, 7)]
                  ];
 
-  recognizer.AddGesture( "triangle", useBoundedRotationInvariance, triangle);
+  recognizer.AddGesture( "triangle", triangle);
 
   var myHandDrawingOfTriangle = [ [new nDollar.Point(20, 7),   new nDollar.Point(54, 8),  new nDollar.Point(100, 10)],
                                   [new nDollar.Point(103, 7),  new nDollar.Point(82, 47), new nDollar.Point(66, 87)],
                                   [new nDollar.Point(66, 87),  new nDollar.Point(45, 45), new nDollar.Point(30, 7)]
                                  ];
 
-  result = recognizer.recognize( myHandDrawingOfTriangle, useBoundedRotationInvariance, requireSameNoOfStrokes, useProtractor);
+  result = recognizer.recognize( myHandDrawingOfTriangle, requireSameNoOfStrokes, useProtractor);
     /*
       result = { Name: "triangle", Score: 8.076 }
     */
@@ -80,13 +82,13 @@ You can check [https://depts.washington.edu/aimgroup/proj/dollar/ndollar.html] t
 
 The Recognizer class is the main clas who do all the works. We can just create instance by
 ```
-var recognizer = new nDollar.Recognizer();
+var recognizer = new nDollar.Recognizer( useBoundedRotationInvariance );
 ```
 
 Then we need to add knowledge to it by either loading defaults or create your own gestures.
 
 ```js
-recognizer.LoadDefaultGestures( useBoundedRotationInvariance )
+recognizer.LoadDefaultGestures( )
 ```
 
 This load pre-built 16 shapes of gestures same as in the original.
@@ -101,13 +103,13 @@ Or you can create your own shapes
                   [new nDollar.Point(66, 87), new nDollar.Point(30, 7)]
                  ];
 
-  recognizer.AddGesture( "triangle", useBoundedRotationInvariance, triangle);
+  recognizer.AddGesture( "triangle", triangle);
 ```
 
 Then you can test your gesture to the recognizer.
 
 ```js
-result = recognizer.recognize( handDrawingOfTriangle, useBoundedRotationInvariance, requireSameNoOfStrokes, useProtractor);
+result = recognizer.recognize( handDrawingOfTriangle, requireSameNoOfStrokes, useProtractor);
 ```
 
 ### Recognize options

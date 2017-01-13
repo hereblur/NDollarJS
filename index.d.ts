@@ -20,12 +20,13 @@ declare module 'ndollar-js' {
 	    Unistrokes: Unistroke[];
 	    constructor(Name: string, useBoundedRotationInvariance: boolean, strokes: Point[][]);
 	} class Recognizer {
+	    useBoundedRotationInvariance: boolean;
 	    Multistrokes: Multistroke[];
-	    constructor();
-	    Recognize(strokes: Point[][], useBoundedRotationInvariance: boolean, requireSameNoOfStrokes: boolean, useProtractor: boolean): Result;
-	    AddGesture(name: string, useBoundedRotationInvariance: boolean, strokes: Point[][]): number;
+	    constructor(useBoundedRotationInvariance: boolean);
+	    Recognize(strokes: Point[][], requireSameNoOfStrokes: boolean, useProtractor: boolean): Result;
+	    AddGesture(name: string, strokes: Point[][]): number;
 	    ClearGestures(): void;
-	    LoadDefaultGestures(useBoundedRotationInvariance: boolean): void;
+	    LoadDefaultGestures(): void;
 	}
 	export { Point, Result, Unistroke, Multistroke, Recognizer };
 
